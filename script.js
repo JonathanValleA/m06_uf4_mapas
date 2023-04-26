@@ -74,12 +74,62 @@ click.addEventListener("click", function() {
     })
 })
 
+function buscarMuseu() {
+    let xhr = new XMLHttpRequest();
+    let url = `http://dades.eicub.net/api/1/ateneus`;
+
+    xhr.onreadystatechange = function() {
+        if(this.status == 200 && this.readyState == 4) {
+            let datos = JSON.parse(this.responseText);
+
+            for(let i = 0; i < datos.length; i++) {
+
+                let fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+                let toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+            
+                layer_marcador = new OpenLayers.Layer.Markers("Marcador");
+            
+                map.addLayer(layer_marcador);
+    
+                
+                var marker = new OpenLayers.Marker(new
+                    OpenLayers.LonLat(datos[i].Longitud, datos[i].Latitud).transform(
+                        fromProjection,
+                        toProjection
+                    ));
+            
+                layer_marcador.addMarker(marker);
+            
+                layer_marcador.events.register('mousedown', marker, function() {
+             
+                        const popup = new OpenLayers.Popup(
+                            "popup",
+                            this.lonlat,
+                            new OpenLayers.Size(150, 200),
+                            datos[i].Equipament,
+                            true
+                        )
+                        map.addPopup(popup);
+             
+                })
+
+            }
+
+        }
+    }
+
+    xhr.open("GET", url);
+    xhr.send();
+}
+
+
 function inicio() {
     let fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
     let toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
 
     centrarMapa(fromProjection, toProjection);
     marcador(fromProjection, toProjection);
+    buscarMuseu();
 }
 
 
