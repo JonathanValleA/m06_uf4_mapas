@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MAPES</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="contenedor">
+            <h1>Mapa</h1>
+            <div id="demoMap" class="mapa"></div>
+            <div class="controls">
+                <input type="text" id="nom" name="nom" placeholder="Escribe un nombre de lugar">
+                <input type="text" id="latitud" name="latitud" placeholder="Escribe una latitud">
+                <input type="text" id="longitud" name="longitud" placeholder="Escribe una longitud">
+                <button id="enviar">Enviar</button>
+            </div>
+        </div>
+        <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
